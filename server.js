@@ -1,5 +1,5 @@
-const app = require("./index.js");
-const mongoose= require("mongoose");
+import app from "./index.js";
+import mongoose from "mongoose";
 const port = 5000;
 async function main() {
   try {
