@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const port = 5000;
 async function main() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/try-docker");
+    await mongoose.connect("mongodb://127.0.0.1:27017/try-docker");
     // await mongoose.connect(config.local_database_url as string);
 
 
