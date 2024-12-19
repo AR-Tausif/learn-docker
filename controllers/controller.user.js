@@ -3,8 +3,8 @@ import userModel from '../models/user.model.js';
 // Function to generate a user table row (reusable)
 const generateUserTableRow = (user) => `
   <tr>
-    <td style="padding: 10px; border: 1px solid #ddd; text-align: left;"><span class="math-inline">\{user\.name\}</td\>
-<td style\="padding\: 10px; border\: 1px solid \#ddd; text\-align\: left;"\></span>{user.email}</td>
+    <td style="padding: 10px; border: 1px solid #ddd; text-align: left;"><span class="math-inline">${user.name}</td>
+<td style="padding: 10px; border: 1px solid #ddd; text-align: left;"></span>${user.email}</td>
     <td style="padding: 10px; border: 1px solid #ddd; text-align: left;">${user.address}</td>
   </tr>
 `;
@@ -14,39 +14,29 @@ const getAllUsersFromDB = async (req, res, next) => {
 		const users = await userModel.find({});
 		
 		
-	
-		// Combine template and populated body
+		const tableBody = users.map(generateUserTableRow).join(''); 
 		const htmlResponse = `
-	   <div style="">
-	   <h2 style="font-weight: bold; margin-bottom-50px;">All user list</h2>
-		   <div style="display:flex; justify-content:center; align-items: center; padding-bottom:100px">
-			   <a href="/users/create">
-				   <button>
-					   Create a new user
-				   </button>
-			   </a>
-		   </div>
-		 <table style="width:80%; margin:auto; border-collapse: collapse; font-family: sans-serif;">
-		   <thead style="background-color: #f2f2f2;">
-			 <tr>
-			   <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">User Name</th>
-			   <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Email</th>
-			   <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Address</th>
-			 </tr>
-			
-			 ${
-				users.map(user=> `<tr>
-					<td style="padding: 10px; border: 1px solid #ddd;">${user.name}</td>
-					<td style="padding: 10px; border: 1px solid #ddd;">${user.email}</td>
-					<td style="padding: 10px; border: 1px solid #ddd;">${user.address}</td>
-				  </tr>`)
-			 }
-		   </thead>
-		   <tbody>
-			 </tbody>
-		 </table>
-	   </div>
-	   `;
+      <div style="">
+        <h2>All user list</h2>
+        <div style="display:flex; justify-content:center; align-items: center; padding-bottom:100px;">
+          <a href="/users/create">
+            <button>Create a new user</button>
+          </a>
+        </div>
+        <table style="width:80%; margin:auto; border-collapse: collapse; font-family: sans-serif;">
+          <thead style="background-color: #f2f2f2;">
+            <tr>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">User Name</th>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Email</th>
+              <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableBody}
+          </tbody>
+        </table>
+      </div>
+    `;
 		return res.send(htmlResponse); // Ensure you send a response
 	} catch (err) {
 		next(err); // Pass errors to the next middleware 
