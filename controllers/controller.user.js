@@ -52,7 +52,7 @@ const createUserWithGetMethod = async (req, res, next) => {
 			</head>
 			<body>
 			<h1>Create New User</h1>
-			<form action="https://humble-train-j67449q4wpwh5gp4-5000.app.github.dev/users/create-user" method="POST">
+			<form action="/users/create-user" method="POST">
 				<label for="name">Name:</label><br>
 				<input type="text" id="name" name="name" required><br><br>
 
